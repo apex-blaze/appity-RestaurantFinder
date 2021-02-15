@@ -1,16 +1,5 @@
 import React from "react";
 import ReactDom from "react-dom";
-import "./index.css";
+import App from "./App";
 
-import { book } from "./books";
-import Book from "./Book";
-
-function BookList() {
-  return (
-    <section className="booklist">
-      <Book key={book.id} {...book} />
-    </section>
-  );
-}
-
-ReactDom.render(<BookList />, document.getElementById("root"));
+ReactDom.render(<App />, document.getElementById("root"));
