@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Appity from "../apis/Appity";
+import { RestaurantContext } from "../context/RestaurantContext";
 
-const RestaurantList = () => {
+const RestaurantList = (props) => {
+  const { restaurants, setRestaurants } = useContext(RestaurantContext);
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
         const response = await Appity.get("/");
-        console.log(response);
+        setRestaurants(response.data.data.restaurants);
       } catch (err) {
         console.log(err);
       }
-    }
+    };
+
     fetchData();
   }, []);
   return (
@@ -27,7 +30,24 @@ const RestaurantList = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {restaurants &&
+            restaurants.map((restaurant) => {
+              return (
+                <tr key={restaurant.id}>
+                  <td>{restaurant.name}</td>
+                  <td>{restaurant.location}</td>
+                  <td>{"$".repeat(restaurant.price_range)}</td>
+                  <td>Reviews</td>
+                  <td>
+                    <button className="btn btn-warning">Update</button>
+                  </td>
+                  <td>
+                    <button className="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              );
+            })}
+          {/* <tr>
             <td>McDee</td>
             <td>H.P</td>
             <td>$$</td>
@@ -38,7 +58,7 @@ const RestaurantList = () => {
             <td>
               <button className="btn btn-danger">Delete</button>
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
     </div>

@@ -16,10 +16,11 @@ const AddRestaurant = () => {
             />
           </div>
           <div className="col">
-            <select className="custom-select my-1 mr-sm-2">
-              <option disabled selected value="">
-                Price Range
-              </option>
+            <select
+              className="custom-select my-1 mr-sm-2"
+              defaultValue="Price Range"
+            >
+              <option disabled>Price Range</option>
               <option value="1">$</option>
               <option value="2">$$</option>
               <option value="3">$$$</option>
