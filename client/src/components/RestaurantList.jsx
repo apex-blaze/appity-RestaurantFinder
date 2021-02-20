@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import Appity from "../apis/Appity";
 import { RestaurantContext } from "../context/RestaurantContext";
+import { useHistory } from "react-router-dom";
 
 const RestaurantList = (props) => {
   const { restaurants, setRestaurants } = useContext(RestaurantContext);
+  let history = useHistory();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,6 +31,10 @@ const RestaurantList = (props) => {
       console.log(err);
     }
   };
+
+  const handleUpdate = (id) => {
+    history.push(`/restaurants/${id}/update`);
+  };
   return (
     <div className="list-group">
       <table className="table table-hover table-dark">
@@ -52,7 +58,12 @@ const RestaurantList = (props) => {
                   <td>{"$".repeat(restaurant.price_range)}</td>
                   <td>Reviews</td>
                   <td>
-                    <button className="btn btn-warning">Update</button>
+                    <button
+                      onClick={() => handleUpdate(restaurant.id)}
+                      className="btn btn-warning"
+                    >
+                      Update
+                    </button>
                   </td>
                   <td>
                     <button
