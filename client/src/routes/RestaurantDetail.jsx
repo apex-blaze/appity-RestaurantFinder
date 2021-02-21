@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Appity from "../apis/Appity";
+import StarRating from "../components/StarRating";
 import { RestaurantContext } from "../context/RestaurantContext";
 
 const RestaurantDetail = () => {
@@ -21,7 +22,7 @@ const RestaurantDetail = () => {
     fetchData();
   });
 
-  return <div>{selectedRestaurant && selectedRestaurant.name}</div>;
+  return <div>{selectedRestaurant && <StarRating rating={3.4} />}</div>;
 };
 
 export default RestaurantDetail;
