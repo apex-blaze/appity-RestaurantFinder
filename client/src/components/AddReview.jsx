@@ -1,9 +1,29 @@
 import React, { useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import Appity from "../apis/Appity";
 
 const AddReview = () => {
+  const { id } = useParams();
+  const location = useLocation();
+  const history = useHistory();
   const [name, setName] = useState("");
   const [rating, setRating] = useState("Rating");
   const [reviewText, setReviewText] = useState("");
+
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await Appity.post(`/${id}/addReview`, {
+        name,
+        rating,
+        review: reviewText,
+      });
+      history.go(0);
+      // console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="mb-2">
@@ -49,7 +69,13 @@ const AddReview = () => {
             className="form-control"
           ></textarea>
         </div>
-        <button className="btn btn-primary">Submit</button>
+        <button
+          onClick={handleSubmitReview}
+          type="submit"
+          className="btn btn-primary"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
