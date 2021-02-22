@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Appity from "../apis/Appity";
 import { RestaurantContext } from "../context/RestaurantContext";
 import { useHistory } from "react-router-dom";
+import StarRating from "./StarRating";
 
 const RestaurantList = (props) => {
   const { restaurants, setRestaurants } = useContext(RestaurantContext);
@@ -41,6 +42,18 @@ const RestaurantList = (props) => {
   const handleRestaurantSelect = (id) => {
     history.push(`/restaurants/${id}`);
   };
+
+  const RenderRating = ({ restaurant }) => {
+    if (!restaurant.count) {
+      return <span className="text-warning">0 reviews</span>;
+    }
+    return (
+      <>
+        <StarRating rating={restaurant.average_rating} />
+        <span className="text-warning ml-1">({restaurant.count})</span>
+      </>
+    );
+  };
   return (
     <div className="list-group">
       <table className="table table-hover table-dark">
@@ -65,7 +78,9 @@ const RestaurantList = (props) => {
                   <td>{restaurant.name}</td>
                   <td>{restaurant.location}</td>
                   <td>{"$".repeat(restaurant.price_range)}</td>
-                  <td>Reviews</td>
+                  <td>
+                    <RenderRating restaurant={restaurant} />
+                  </td>
                   <td>
                     <button
                       onClick={(e) => handleUpdate(e, restaurant.id)}
