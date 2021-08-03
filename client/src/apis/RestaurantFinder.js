@@ -1,5 +1,7 @@
-require("dotenv").config();
 const axios = require("axios");
 export default axios.create({
-  baseURL: "http://localhost:5000/api/v1/restaurants",
+  baseURL: "/api/v1/restaurants",
 });
+
+// proxy is only in development, it is ignored in production
+// here heroku is serving build static content as well as api
