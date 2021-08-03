@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
-import Appity from "../apis/Appity";
-import { RestaurantContext } from "../context/RestaurantContext";
+import React, { useState, useContext } from "react";
+import RestaurantFinder from "../apis/RestaurantFinder";
+import { RestaurantsContext } from "../context/RestaurantsContext";
 
 const AddRestaurant = () => {
-  const { addRestaurant } = useContext(RestaurantContext);
+  const { addRestaurants } = useContext(RestaurantsContext);
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [priceRange, setPriceRange] = useState("Price Range");
@@ -11,12 +11,13 @@ const AddRestaurant = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await Appity.post("/", {
+      const response = await RestaurantFinder.post("/", {
         name,
         location,
         price_range: priceRange,
       });
-      addRestaurant(response.data.data.restaurant);
+      console.log(response.data.data);
+      addRestaurants(response.data.data.restaurant);
     } catch (err) {
       console.log(err);
     }
@@ -38,16 +39,16 @@ const AddRestaurant = () => {
             <input
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              type="text"
               className="form-control"
+              type="text"
               placeholder="location"
             />
           </div>
           <div className="col">
             <select
-              className="custom-select my-1 mr-sm-2"
               value={priceRange}
               onChange={(e) => setPriceRange(e.target.value)}
+              className="custom-select my-1 mr-sm-2"
             >
               <option disabled>Price Range</option>
               <option value="1">$</option>

@@ -1,13 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { RestaurantContextProvider } from "./context/RestaurantContext";
 import Home from "./routes/Home";
-import RestaurantDetail from "./routes/RestaurantDetail";
 import UpdatePage from "./routes/UpdatePage";
-
+import RestaurantDetailPage from "./routes/RestaurantDetailPage";
+import { RestaurantsContextProvider } from "./context/RestaurantsContext";
 const App = () => {
   return (
-    <RestaurantContextProvider>
+    <RestaurantsContextProvider>
       <div className="container">
         <Router>
           <Switch>
@@ -17,11 +16,15 @@ const App = () => {
               path="/restaurants/:id/update"
               component={UpdatePage}
             />
-            <Route exact path="/restaurants/:id" component={RestaurantDetail} />
+            <Route
+              exact
+              path="/restaurants/:id"
+              component={RestaurantDetailPage}
+            />
           </Switch>
         </Router>
       </div>
-    </RestaurantContextProvider>
+    </RestaurantsContextProvider>
   );
 };
 

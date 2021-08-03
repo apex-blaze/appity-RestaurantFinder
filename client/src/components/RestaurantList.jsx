@@ -1,20 +1,19 @@
-import React, { useContext, useEffect } from "react";
-import Appity from "../apis/Appity";
-import { RestaurantContext } from "../context/RestaurantContext";
+import React, { useEffect, useContext } from "react";
+import RestaurantFinder from "../apis/RestaurantFinder";
+import { RestaurantsContext } from "../context/RestaurantsContext";
 import { useHistory } from "react-router-dom";
 import StarRating from "./StarRating";
 
 const RestaurantList = (props) => {
-  const { restaurants, setRestaurants } = useContext(RestaurantContext);
+  const { restaurants, setRestaurants } = useContext(RestaurantsContext);
   let history = useHistory();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await Appity.get("/");
+        const response = await RestaurantFinder.get("/");
+        console.log(response.data.data);
         setRestaurants(response.data.data.restaurants);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
 
     fetchData();
@@ -23,7 +22,7 @@ const RestaurantList = (props) => {
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      const response = await Appity.delete(`/${id}`);
+      const response = await RestaurantFinder.delete(`/${id}`);
       setRestaurants(
         restaurants.filter((restaurant) => {
           return restaurant.id !== id;
@@ -43,7 +42,7 @@ const RestaurantList = (props) => {
     history.push(`/restaurants/${id}`);
   };
 
-  const RenderRating = ({ restaurant }) => {
+  const renderRating = (restaurant) => {
     if (!restaurant.count) {
       return <span className="text-warning">0 reviews</span>;
     }
@@ -54,6 +53,7 @@ const RestaurantList = (props) => {
       </>
     );
   };
+
   return (
     <div className="list-group">
       <table className="table table-hover table-dark">
@@ -78,9 +78,7 @@ const RestaurantList = (props) => {
                   <td>{restaurant.name}</td>
                   <td>{restaurant.location}</td>
                   <td>{"$".repeat(restaurant.price_range)}</td>
-                  <td>
-                    <RenderRating restaurant={restaurant} />
-                  </td>
+                  <td>{renderRating(restaurant)}</td>
                   <td>
                     <button
                       onClick={(e) => handleUpdate(e, restaurant.id)}
@@ -101,10 +99,23 @@ const RestaurantList = (props) => {
               );
             })}
           {/* <tr>
-            <td>McDee</td>
-            <td>H.P</td>
+            <td>mcdonalds</td>
+            <td>New YOrk</td>
             <td>$$</td>
-            <td>4</td>
+            <td>Rating</td>
+            <td>
+              <button className="btn btn-warning">Update</button>
+            </td>
+            <td>
+              <button className="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>mcdonalds</td>
+            <td>New YOrk</td>
+            <td>$$</td>
+            <td>Rating</td>
             <td>
               <button className="btn btn-warning">Update</button>
             </td>
