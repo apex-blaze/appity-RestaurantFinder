@@ -35,7 +35,7 @@ app.get("/api/v1/restaurants", async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    res.send(err);
   }
 });
 
@@ -64,7 +64,7 @@ app.get("/api/v1/restaurants/:id", async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    res.send(err);
   }
 });
 
@@ -86,7 +86,7 @@ app.post("/api/v1/restaurants", async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    res.send(err);
   }
 });
 
@@ -106,7 +106,7 @@ app.put("/api/v1/restaurants/:id", async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    res.send(err);
   }
   // console.log(req.params.id);
   // console.log(req.body);
@@ -123,7 +123,7 @@ app.delete("/api/v1/restaurants/:id", async (req, res) => {
       status: "sucess",
     });
   } catch (err) {
-    console.log(err);
+    res.send(err);
   }
 });
 
@@ -141,7 +141,7 @@ app.post("/api/v1/restaurants/:id/addReview", async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    res.send(err);
   }
 });
 
