@@ -10,7 +10,7 @@ const devConfig = {
 }; // you can also represent connectionString for devConfig
 
 const proConfig = {
-  connectionString: process.env.DATABASE_URL, //heroku add-on
+  connectionString: process.env.DATABASE_URL + "?sslmode=require", //heroku add-on
 };
 
 const pool = new Pool(
